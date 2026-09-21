@@ -1,0 +1,50 @@
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Mon Sep 21 11:10:09 2026
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Mon Sep 21 2026 11:10:09 +00:00
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> SQL> SQL> SQL> SQL> SQL> === WITHDRAWAL TRANSACTIONS (WITHDRAW_FUNDS PROCEDURE) ===
+SQL> SQL> [TXN-4] Withdraw Rs.2,500 from account 100010000002 (Arun Kumar - CURRENT)
+SQL> SQL> DECLARE v_status VARCHAR2(200); BEGIN withdraw_funds(100010000002, 2500, 'ATM Withdrawal'
+SQL> v_status); DBMS_OUTPUT.PUT_LINE(v_status); END
+SQL> SQL> /
+SQL>   2  SUCCESS : Rs.	    2,500.00 withdrawn from account 100010000002. New balance
+Rs.	 22,500.00
+
+PL/SQL procedure successfully completed.
+
+SQL> SQL> [TXN-5] Withdraw Rs.5,000 from account 100010000006 (Suresh Babu - CURRENT)
+SQL> SQL> DECLARE v_status VARCHAR2(200); BEGIN withdraw_funds(100010000006, 5000, 'NEFT Transfer'
+SQL> v_status); DBMS_OUTPUT.PUT_LINE(v_status); END
+SQL> SQL> /
+SQL>   2  SUCCESS : Rs.	    5,000.00 withdrawn from account 100010000006. New balance
+Rs.	 45,000.00
+
+PL/SQL procedure successfully completed.
+
+SQL> SQL> [TXN-6] Withdraw Rs.10,000 from account 100010000005 (Kavya S - SAVINGS)
+SQL> SQL> DECLARE v_status VARCHAR2(200); BEGIN withdraw_funds(100010000005, 10000, 'ATM Withdrawal'
+SQL> v_status); DBMS_OUTPUT.PUT_LINE(v_status); END
+SQL> SQL> /
+SQL>   2  ERROR : Insufficient balance. Available Rs.	  8,000.00, requested Rs.
+10,000.00
+
+PL/SQL procedure successfully completed.
+
+SQL> SQL> [TXN-7] Withdraw Rs.1,000 from account 999999999999 (invalid account no.)
+SQL> SQL> DECLARE v_status VARCHAR2(200); BEGIN withdraw_funds(999999999999, 1000, 'ATM Withdrawal'
+SQL> v_status); DBMS_OUTPUT.PUT_LINE(v_status); END
+SQL> SQL> /
+SQL>   2  ERROR : Account 999999999999 not found or not active.
+
+PL/SQL procedure successfully completed.
+
+SQL> Disconnected from Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0

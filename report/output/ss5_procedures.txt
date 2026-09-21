@@ -1,0 +1,121 @@
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Mon Sep 21 11:10:09 2026
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Mon Sep 21 2026 11:10:09 +00:00
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> SQL> SQL> SQL> SQL> SQL> SQL> === CREATE PROCEDURE DEPOSIT_FUNDS ===
+SQL> SQL> CREATE OR REPLACE PROCEDURE deposit_funds (
+SQL> p_account_no   IN  NUMBER,
+SQL> p_amount       IN  NUMBER,
+SQL> p_description  IN  VARCHAR2  DEFAULT 'Cash Deposit',
+SQL> p_status       OUT VARCHAR2
+SQL> ) IS
+SQL> v_balance NUMBER(12,2)
+SQL> BEGIN
+SQL> SELECT current_balance INTO v_balance
+SQL> FROM   account
+SQL> WHERE  account_no = p_account_no AND status = 'ACTIVE'
+SQL> FOR UPDATE
+SQL> IF p_amount <= 0 THEN
+SQL> p_status := 'ERROR : Deposit amount must be greater than zero.'
+SQL> ROLLBACK
+SQL> RETURN
+SQL> END IF
+SQL> UPDATE account
+SQL> SET    current_balance = current_balance + p_amount
+SQL> WHERE  account_no = p_account_no
+SQL> INSERT INTO transaction (txn_id, account_no, txn_type, amount, balance_after, description)
+SQL> VALUES (seq_txn.NEXTVAL, p_account_no, 'DEPOSIT', p_amount, v_balance + p_amount, p_description)
+SQL> COMMIT
+SQL> p_status := 'SUCCESS : Rs.' || TO_CHAR(p_amount, '999,999,990.00') || ' deposited to account ' || p_account_no ||
+SQL> '. New balance Rs.' || TO_CHAR(v_balance + p_amount, '999,999,990.00')
+SQL> EXCEPTION
+SQL> WHEN NO_DATA_FOUND THEN
+SQL> ROLLBACK
+SQL> p_status := 'ERROR : Account ' || p_account_no || ' not found or not active.'
+SQL> END deposit_funds
+SQL> SQL> /
+SQL>   2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32   33   34   35  
+Procedure created.
+
+SQL> SQL> === CREATE PROCEDURE WITHDRAW_FUNDS ===
+SQL> SQL> CREATE OR REPLACE PROCEDURE withdraw_funds (
+SQL> p_account_no   IN  NUMBER,
+SQL> p_amount       IN  NUMBER,
+SQL> p_description  IN  VARCHAR2  DEFAULT 'ATM Withdrawal',
+SQL> p_status       OUT VARCHAR2
+SQL> ) IS
+SQL> v_balance NUMBER(12,2)
+SQL> BEGIN
+SQL> SELECT current_balance INTO v_balance
+SQL> FROM   account
+SQL> WHERE  account_no = p_account_no AND status = 'ACTIVE'
+SQL> FOR UPDATE
+SQL> IF p_amount <= 0 THEN
+SQL> p_status := 'ERROR : Withdrawal amount must be greater than zero.'
+SQL> ROLLBACK
+SQL> RETURN
+SQL> END IF
+SQL> IF p_amount > v_balance THEN
+SQL> p_status := 'ERROR : Insufficient balance. Available Rs.' || TO_CHAR(v_balance, '999,999,990.00') ||
+SQL> ', requested Rs.' || TO_CHAR(p_amount, '999,999,990.00')
+SQL> ROLLBACK
+SQL> RETURN
+SQL> END IF
+SQL> UPDATE account
+SQL> SET    current_balance = current_balance - p_amount
+SQL> WHERE  account_no = p_account_no
+SQL> INSERT INTO transaction (txn_id, account_no, txn_type, amount, balance_after, description)
+SQL> VALUES (seq_txn.NEXTVAL, p_account_no, 'WITHDRAWAL', p_amount, v_balance - p_amount, p_description)
+SQL> COMMIT
+SQL> p_status := 'SUCCESS : Rs.' || TO_CHAR(p_amount, '999,999,990.00') || ' withdrawn from account ' || p_account_no ||
+SQL> '. New balance Rs.' || TO_CHAR(v_balance - p_amount, '999,999,990.00')
+SQL> EXCEPTION
+SQL> WHEN NO_DATA_FOUND THEN
+SQL> ROLLBACK
+SQL> p_status := 'ERROR : Account ' || p_account_no || ' not found or not active.'
+SQL> END withdraw_funds
+SQL> SQL> /
+SQL>   2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32   33   34   35   36   37   38   39   40   41   42  
+Procedure created.
+
+SQL> SQL> === CREATE PROCEDURE OPEN_ACCOUNT ===
+SQL> SQL> CREATE OR REPLACE PROCEDURE open_account (
+SQL> p_customer_id  IN  NUMBER,
+SQL> p_account_type IN  VARCHAR2,
+SQL> p_opening_bal  IN  NUMBER    DEFAULT 0,
+SQL> p_status       OUT VARCHAR2
+SQL> ) IS
+SQL> v_acct_no NUMBER(12)
+SQL> v_count   NUMBER
+SQL> BEGIN
+SQL> SELECT COUNT(*) INTO v_count FROM customer WHERE customer_id = p_customer_id
+SQL> IF v_count = 0 THEN
+SQL> p_status := 'ERROR : Customer ' || p_customer_id || ' does not exist.'
+SQL> RETURN
+SQL> END IF
+SQL> IF p_account_type NOT IN ('SAVINGS','CURRENT','FIXED') THEN
+SQL> p_status := 'ERROR : Invalid account type. Use SAVINGS, CURRENT or FIXED.'
+SQL> RETURN
+SQL> END IF
+SQL> v_acct_no := seq_acct.NEXTVAL
+SQL> INSERT INTO account (account_no, customer_id, account_type, opening_balance, current_balance, status, opened_on)
+SQL> VALUES (v_acct_no, p_customer_id, p_account_type, p_opening_bal, p_opening_bal, 'ACTIVE', SYSDATE)
+SQL> COMMIT
+SQL> p_status := 'SUCCESS : Account ' || v_acct_no || ' (' || p_account_type || ') opened for customer ' || p_customer_id ||
+SQL> ' with opening balance Rs.' || TO_CHAR(p_opening_bal, '999,999,990.00')
+SQL> END open_account
+SQL> SQL> /
+SQL>   2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25   26   27   28   29  
+Procedure created.
+
+SQL> SQL> === All PL/SQL procedures created successfully ===
+SQL> Disconnected from Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0

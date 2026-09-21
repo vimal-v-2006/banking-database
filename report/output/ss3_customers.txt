@@ -1,0 +1,73 @@
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Mon Sep 21 11:10:09 2026
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Mon Sep 21 2026 11:10:08 +00:00
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> === REGISTERING CUSTOMER RECORDS ===
+SQL> SQL> INSERT INTO customer VALUES (1, 'Arun', 'Kumar', 'arun.kumar@gmail.com', '9843012345', TO_DATE('12-APR-1988'
+SQL> 'DD-MON-YYYY'), '12, Hill Road', 'Kotagiri', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO customer VALUES (2, 'Priya', 'Lakshmi', 'priya.l@gmail.com', '9791122334', TO_DATE('25-AUG-1992'
+SQL> 'DD-MON-YYYY'), '45, Town Panchayat Rd', 'Coimbatore', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO customer VALUES (3, 'Mohammed', 'Rasheed', 'rasheed.m@yahoo.com', '9442233445', TO_DATE('30-JAN-1990'
+SQL> 'DD-MON-YYYY'), '8, Bus Stand Road', 'Kotagiri', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO customer VALUES (4, 'Kavya', 'S', 'kavya.s@outlook.com', '9003344556', TO_DATE('02-NOV-1995'
+SQL> 'DD-MON-YYYY'), '23, Ooty Road', 'Ooty', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO customer VALUES (5, 'Suresh', 'Babu', 'suresh.b@gmail.com', '9864455667', TO_DATE('18-JUN-1985'
+SQL> 'DD-MON-YYYY'), '67, Main Street', 'Pollachi', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO customer VALUES (6, 'Divya', 'R', 'divya.r@gmail.com', '9952266778', TO_DATE('09-MAR-1998'
+SQL> 'DD-MON-YYYY'), '5, Lake View Layout', 'Kotagiri', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> COMMIT
+SQL> 
+Commit complete.
+
+SQL> SQL> === DISPLAY CUSTOMER INFORMATION ===
+SQL> SQL> SELECT customer_id AS id,
+SQL> first_name,
+SQL> last_name,
+SQL> email,
+SQL> phone,
+SQL> TO_CHAR(date_of_birth,'DD-MON-YYYY') AS dob,
+SQL> address AS addr,
+SQL> city,
+SQL> TO_CHAR(created_on,'DD-MON-YYYY')   AS created_on
+SQL> FROM   customer
+SQL> ORDER BY customer_id
+SQL>   2    3    4    5    6    7    8    9   10   11  
+	ID FIRST_NAME LAST_NAME  EMAIL			PHONE	     DOB	  ADDR			 CITY	    CREATED_ON
+---------- ---------- ---------- ---------------------- ------------ ------------ ---------------------- ---------- ------------
+	 1 Arun       Kumar	 arun.kumar@gmail.com	9843012345   12-APR-1988  12, Hill Road 	 Kotagiri   21-SEP-2026
+	 2 Priya      Lakshmi	 priya.l@gmail.com	9791122334   25-AUG-1992  45, Town Panchayat Rd  Coimbatore 21-SEP-2026
+	 3 Mohammed   Rasheed	 rasheed.m@yahoo.com	9442233445   30-JAN-1990  8, Bus Stand Road	 Kotagiri   21-SEP-2026
+	 4 Kavya      S 	 kavya.s@outlook.com	9003344556   02-NOV-1995  23, Ooty Road 	 Ooty	    21-SEP-2026
+	 5 Suresh     Babu	 suresh.b@gmail.com	9864455667   18-JUN-1985  67, Main Street	 Pollachi   21-SEP-2026
+	 6 Divya      R 	 divya.r@gmail.com	9952266778   09-MAR-1998  5, Lake View Layout	 Kotagiri   21-SEP-2026
+
+6 rows selected.
+
+SQL> Disconnected from Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0

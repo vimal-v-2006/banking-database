@@ -1,0 +1,20 @@
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Mon Sep 21 11:10:08 2026
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Mon Sep 21 2026 11:10:08 +00:00
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> SQL> SQL> SQL> SELECT banner FROM v$version
+SQL> 
+BANNER
+--------------------------------------------------------------------------------
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+
+SQL> Disconnected from Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0

@@ -1,0 +1,42 @@
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Mon Sep 21 11:10:09 2026
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Mon Sep 21 2026 11:10:09 +00:00
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> SQL> SQL> SQL> SQL> SQL> === DEPOSIT TRANSACTIONS (DEPOSIT_FUNDS PROCEDURE) ===
+SQL> SQL> [TXN-1] Deposit Rs.5,000 into account 100010000001 (Arun Kumar - SAVINGS)
+SQL> SQL> DECLARE v_status VARCHAR2(200); BEGIN deposit_funds(100010000001, 5000, 'Salary Credit'
+SQL> v_status); DBMS_OUTPUT.PUT_LINE(v_status); END
+SQL> SQL> /
+SQL>   2  SUCCESS : Rs.	    5,000.00 deposited to account 100010000001. New balance Rs.
+15,000.00
+
+PL/SQL procedure successfully completed.
+
+SQL> SQL> [TXN-2] Deposit Rs.20,000 into account 100010000003 (Priya Lakshmi - SAVINGS)
+SQL> SQL> DECLARE v_status VARCHAR2(200); BEGIN deposit_funds(100010000003, 20000, 'Cash Deposit'
+SQL> v_status); DBMS_OUTPUT.PUT_LINE(v_status); END
+SQL> SQL> /
+SQL>   2  SUCCESS : Rs.	   20,000.00 deposited to account 100010000003. New balance Rs.
+35,000.00
+
+PL/SQL procedure successfully completed.
+
+SQL> SQL> [TXN-3] Deposit Rs.12,000 into account 100010000004 (Mohammed Rasheed - FIXED)
+SQL> SQL> DECLARE v_status VARCHAR2(200); BEGIN deposit_funds(100010000004, 12000, 'FD Interest'
+SQL> v_status); DBMS_OUTPUT.PUT_LINE(v_status); END
+SQL> SQL> /
+SQL>   2  SUCCESS : Rs.	   12,000.00 deposited to account 100010000004. New balance Rs.
+112,000.00
+
+PL/SQL procedure successfully completed.
+
+SQL> Disconnected from Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0

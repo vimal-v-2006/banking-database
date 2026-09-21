@@ -1,0 +1,73 @@
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Mon Sep 21 11:10:09 2026
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Mon Sep 21 2026 11:10:09 +00:00
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> === 3. TRANSACTION HISTORY - Account 100010000001 ===
+SQL> SQL> SELECT txn_id,
+SQL> TO_CHAR(txn_date,'DD-MON-YYYY HH24:MI:SS') AS txn_date,
+SQL> txn_type AS ttype,
+SQL> amount,
+SQL> balance_after AS bal_after,
+SQL> description AS remark
+SQL> FROM   transaction
+SQL> WHERE  account_no = 100010000001
+SQL> ORDER BY txn_date
+SQL>   2    3    4    5    6    7    8    9  
+TXN_ID TXN_DATE 	    TTYPE	      AMOUNT	 BAL_AFTER REMARK
+------ -------------------- ---------- ------------- ------------- ------------------
+  1001 21-SEP-2026 11:10:09 DEPOSIT	    5,000.00	 15,000.00 Salary Credit
+
+1 row selected.
+
+SQL> SQL> === 4. COMPLETE TRANSACTION HISTORY (all accounts) ===
+SQL> SQL> SELECT txn_id,
+SQL> account_no,
+SQL> TO_CHAR(txn_date,'DD-MON-YYYY HH24:MI') AS txn_date,
+SQL> txn_type AS ttype,
+SQL> amount,
+SQL> balance_after AS bal_after,
+SQL> description AS remark
+SQL> FROM   transaction
+SQL> ORDER BY txn_date, txn_id
+SQL>   2    3    4    5    6    7    8    9  
+TXN_ID	  ACCOUNT_NO TXN_DATE		  TTYPE 	    AMOUNT     BAL_AFTER REMARK
+------ ------------- -------------------- ---------- ------------- ------------- ------------------
+  1001	100010000001 21-SEP-2026 11:10	  DEPOSIT	  5,000.00     15,000.00 Salary Credit
+  1002	100010000003 21-SEP-2026 11:10	  DEPOSIT	 20,000.00     35,000.00 Cash Deposit
+  1003	100010000004 21-SEP-2026 11:10	  DEPOSIT	 12,000.00    112,000.00 FD Interest
+  1004	100010000002 21-SEP-2026 11:10	  WITHDRAWAL	  2,500.00     22,500.00 ATM Withdrawal
+  1005	100010000006 21-SEP-2026 11:10	  WITHDRAWAL	  5,000.00     45,000.00 NEFT Transfer
+
+5 rows selected.
+
+SQL> SQL> === 5. BANK SUMMARY ===
+SQL> SQL> SELECT 'TOTAL CUSTOMERS'	AS metric, TO_CHAR(COUNT(*), '9999')		     AS value FROM customer
+SQL> UNION ALL
+SQL> SELECT 'TOTAL ACCOUNTS'    AS metric, TO_CHAR(COUNT(*), '9999') 		AS value FROM account
+SQL> UNION ALL
+SQL> SELECT 'TOTAL DEPOSITS'    AS metric, TO_CHAR(SUM(amount), '9,999,990.00')	AS value FROM transaction WHERE txn_type = 'DEPOSIT'
+SQL> UNION ALL
+SQL> SELECT 'TOTAL WITHDRAWALS' AS metric, TO_CHAR(SUM(amount), '9,999,990.00')	AS value FROM transaction WHERE txn_type = 'WITHDRAWAL'
+SQL> UNION ALL
+SQL> SELECT 'TOTAL BANK BALANCE' AS metric, TO_CHAR(SUM(current_balance), '9,999,990.00') AS value FROM account
+SQL>   2    3    4    5    6    7    8    9  
+METRIC		   VALUE
+------------------ -------------
+TOTAL CUSTOMERS        6
+TOTAL ACCOUNTS	       7
+TOTAL DEPOSITS	       37,000.00
+TOTAL WITHDRAWALS	7,500.00
+TOTAL BANK BALANCE    242,500.00
+
+5 rows selected.
+
+SQL> Disconnected from Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0

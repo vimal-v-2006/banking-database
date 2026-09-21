@@ -1,0 +1,70 @@
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Mon Sep 21 11:10:09 2026
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Mon Sep 21 2026 11:10:09 +00:00
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> === OPENING ACCOUNTS (SAVINGS / CURRENT / FIXED) ===
+SQL> SQL> INSERT INTO account VALUES (100010000001, 1, 'SAVINGS', 10000,  10000,  'ACTIVE', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO account VALUES (100010000002, 1, 'CURRENT', 25000,  25000,  'ACTIVE', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO account VALUES (100010000003, 2, 'SAVINGS', 15000,  15000,  'ACTIVE', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO account VALUES (100010000004, 3, 'FIXED',   100000, 100000, 'ACTIVE', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO account VALUES (100010000005, 4, 'SAVINGS',  8000,   8000,   'ACTIVE', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO account VALUES (100010000006, 5, 'CURRENT', 50000,  50000,  'ACTIVE', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> INSERT INTO account VALUES (100010000007, 6, 'SAVINGS',  5000,   5000,   'ACTIVE', SYSDATE)
+SQL> 
+1 row created.
+
+SQL> SQL> COMMIT
+SQL> 
+Commit complete.
+
+SQL> SQL> === DISPLAY ACCOUNT DETAILS (V_ACCOUNT_SUMMARY VIEW) ===
+SQL> SQL> SELECT account_no,
+SQL> customer_name AS name,
+SQL> account_type  AS type,
+SQL> opening_balance AS open_bal,
+SQL> current_balance AS cur_bal,
+SQL> status,
+SQL> TO_CHAR(opened_on,'DD-MON-YYYY') AS opened_on
+SQL> FROM   v_account_summary
+SQL> ORDER BY account_no
+SQL>   2    3    4    5    6    7    8    9  
+   ACCOUNT_NO NAME		     TYPE	    OPEN_BAL	    CUR_BAL STATUS   OPENED_ON
+------------- ---------------------- -------- -------------- -------------- -------- ------------
+ 100010000001 Arun Kumar	     SAVINGS	   10,000.00	  10,000.00 ACTIVE   21-SEP-2026
+ 100010000002 Arun Kumar	     CURRENT	   25,000.00	  25,000.00 ACTIVE   21-SEP-2026
+ 100010000003 Priya Lakshmi	     SAVINGS	   15,000.00	  15,000.00 ACTIVE   21-SEP-2026
+ 100010000004 Mohammed Rasheed	     FIXED	  100,000.00	 100,000.00 ACTIVE   21-SEP-2026
+ 100010000005 Kavya S		     SAVINGS	    8,000.00	   8,000.00 ACTIVE   21-SEP-2026
+ 100010000006 Suresh Babu	     CURRENT	   50,000.00	  50,000.00 ACTIVE   21-SEP-2026
+ 100010000007 Divya R		     SAVINGS	    5,000.00	   5,000.00 ACTIVE   21-SEP-2026
+
+7 rows selected.
+
+SQL> Disconnected from Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
