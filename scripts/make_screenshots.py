@@ -224,6 +224,7 @@ SHOTS = [
     ("ss7_withdrawals.txt",  "er_withdrawals.png", "SQL*Plus  -  Oracle Database 21c Express Edition", None),
     ("ss8_report.txt",       "er_history.png",   "SQL*Plus  -  Oracle Database 21c Express Edition", ("=== 3.", "=== 5.")),
     ("ss8_report.txt",       "er_summary.png",   "SQL*Plus  -  Oracle Database 21c Express Edition", ("=== 5.", None)),
+    ("ss9_tests.txt",        "er_tests.png",     "SQL*Plus  -  Oracle Database 21c Express Edition", None),
 
 ]
 
